@@ -14,10 +14,8 @@
                     <li>
                         <p><a href="{% url 'event_detail' f_event.pk %}">{{ f_event.title }}</a> - {{ f_event.date }}</p>
                         <p>See <a href="{% url 'participants' f_event.pk%}">who</a> attended this event</p>
-                        {% if f_event.date > today %}
-                            <p><a href="{% url 'event_edit' f_event.pk %}">Edit Event</a></p>
-                            <p><a href="{% url 'event_delete' f_event.pk %}">Delete Event</a></p>
-                        {% endif %}
+                        <p><a href="{% url 'event_edit' f_event.pk %}">Edit Event</a></p>
+                        <p><a href="{% url 'event_delete' f_event.pk %}">Delete Event</a></p>
                     </li>
                 {% endfor %}
             </ul>
@@ -34,10 +32,10 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        
+
         <p><a href="{% url 'event_new' %}">Create Event</a></p>
         <p><a href="{% url 'profile' user.pk %}">Back to Profile</a></p>
-        
+
     {% else %}
         <h1>Hosting</h1>
         <p>You must be <a href="{% url 'login' %}">logged in</a> to view this page.</p>
