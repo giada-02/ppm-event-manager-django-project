@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title%}Attending{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Attending</h1>
+        <p>Here are the events you are attending:</p>
+        <ul>
+            {% for event in events %}
+                <li>
+                    <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a> - {{ event.date }} 
+                    by <a href="{% url 'organizer' event.pk %}">{{ event.organizer }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <p><a href="{% url 'profile' user.pk %}">Back to Profile</a></p>
+        
+    {% else %}
+        <h1>Attending</h1>
+        <p>You must be <a href="{% url 'login' %}">logged in</a> to view this page.</p>
+    {% endif %}
+{% endblock %}

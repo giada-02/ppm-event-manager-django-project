@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title%}Hosting{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Hosting</h1>
+        <p>Here are the events you are hosting:</p>
+        <ul>
+            {% for event in events %}
+                <li>
+                    <p><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a> - {{ event.date }}</p>
+                    <p>See <a href="{% url 'participants' event.pk%}">who</a> will be attending this event</p>
+                    <p><a href="{% url 'event_edit' event.pk %}">Edit Event</a></p>
+                    <p><a href="{% url 'event_delete' event.pk %}">Delete Event</a></p>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <p><a href="{% url 'profile' user.pk %}">Back to Profile</a></p>
+        
+    {% else %}
+        <h1>Hosting</h1>
+        <p>You must be <a href="{% url 'login' %}">logged in</a> to view this page.</p>
+    {% endif %}
+{% endblock %}

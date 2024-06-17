@@ -1,0 +1,16 @@
+{%  extends 'base.html' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h2>Edit Event</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    {% else %}
+        <p>You must be logged in to edit an event.</p>
+    {% endif %}
+{% endblock %}

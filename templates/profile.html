@@ -1,0 +1,30 @@
+{%  extends 'base.html' %}
+
+{% block title %}Your Profile{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h2>Welcome, {{ user.username }}</h2>
+        <p><a href="{% url 'home' %}">Home</a></p>
+        <p>Here is your profile:</p>
+        <ul>
+            <li>Username: {{ user.username }}</li>
+            <li>Email: {{ user.email }}</li>
+            <li>First name: {{ user.first_name }}</li>
+            <li>Last name: {{ user.last_name }}</li>
+            <li>Age: {{ user.age }}</li>
+            <li>Bio: {{ user.bio }}</li>
+        </ul>
+        
+        <h3>Actions</h3>
+        <p><a href="{% url 'attending' user.pk %}">View Events you are attending</a></p>
+        <p><a href="{% url 'hosting' user.pk %}">View Events you are hosting</a></p>
+        <p><a href="{% url 'event_new' %}">Create Event</a></p>
+        <p><a href="{% url 'profile_edit' user.pk %}">Edit your Profile</a></p>
+        <p><a href="{% url 'profile_delete' user.pk %}">Delete your Account</a></p>
+        
+    {% else %}
+        <h2>Not logged in</h2>
+        <p>You are not logged in. Please log in to view your profile.</p>
+    {% endif %}
+{% endblock %}

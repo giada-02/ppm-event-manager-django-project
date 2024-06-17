@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>{{ event.title }}</h1>
+        <h2>Participants</h2>
+        <p>Number: {{ num_participants }}</p>
+        
+        {% if num_participants == 0 %}
+            <p>There are no participants for this event.</p>
+        {% else %}
+            <p>Here are the participants for this event:</p>
+            <ul>
+                {% for participant in participants %}
+                    <li>
+                        {{ participant.username }}
+                        {{ participant.email }}
+                        {{ participant.first_name }}
+                        {{ participant.last_name }}
+                        {{ participant.age }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <a href="{% url 'hosting' user.pk %}">Back</a>
+    {% else %}
+        <p>You must be logged in to view participants.</p>
+    {% endif %}
+{% endblock %}

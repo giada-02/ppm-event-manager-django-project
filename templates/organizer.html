@@ -1,0 +1,23 @@
+{%  extends 'base.html' %}
+
+{% block title %}{{ organizer.username }}{% endblock %}
+
+{% block content %}
+    
+    <h1>{{ organizer.username }}</h1>
+    <p>{{ organizer.bio }}</p>
+    
+    <h2>Organized Events</h2>
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>This user has not organized any events yet.</p>
+    {% endif %}
+    
+    <a href="{% url 'home' %}">Home</a>
+    
+{% endblock %}

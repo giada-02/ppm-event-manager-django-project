@@ -1,0 +1,20 @@
+{%  extends 'base.html' %}
+
+{% block title %}New Event{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>New Event</h1>
+        <p>Fill out the form below to create a new event.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create</button>
+        </form>
+        <a href="{% url 'profile' user.pk %}" >Cancel</a>
+    {% else %}
+        <h1>Access Denied</h1>
+        <p>You must be logged in to create an event.</p>
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{%  extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>HOME</h1>
+    <form method="get" action="{% url 'home' %}">
+        <input type="text" name="q" placeholder="Search events">
+        <input type="date" name="date">
+        <input type="submit" value="Search">
+    </form>
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <p><a href="{% url 'profile' user.pk %}">Your Profile</a></p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    {% else %}
+        <p><a href="{% url 'signup' %}">Sign up</a></p>
+        <p><a href="{% url 'login' %}">Login</a></p>
+    {% endif %}
+    
+    <p>Welcome to the Event Manager</p>
+    <p>Here are the upcoming events:</p>
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a> - {{ event.date }} 
+                    by <a href="{% url 'organizer' event.pk %}">{{ event.organizer }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no upcoming events.</p>
+    {% endif %}
+    {% if request.GET %}
+        <a href="{% url 'home' %}">See more</a>
+    {% endif %}
+{% endblock %}
