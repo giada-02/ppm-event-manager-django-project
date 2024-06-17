@@ -13,21 +13,23 @@
         {% if user == event.organizer %}
             <p><a href="{% url 'event_edit' event.pk %}">Edit</a></p>
             <p><a href="{% url 'event_delete' event.pk %}">Delete</a></p>
+            <p><a href="{% url 'hosting' user.pk %}">Go to hosted events</a></p>
         {% else %}
             {% if user in attendees %}
                 <form method="post" action="{% url 'event_leave' event.pk %}">
                     {% csrf_token %}
                     <input type="submit" value="Leave">
                 </form>
-                <p><a href="{% url 'attending' user.pk %}">Go to joined events</a></p>
             {% else %}
                 <form method="post" action="{% url 'event_join' event.pk %}">
                     {% csrf_token %}
                     <input type="submit" value="Join">
                 </form>
             {% endif %}
+            <p><a href="{% url 'attending' user.pk %}">Go to joined events</a></p>
         {% endif %}
     {% endif %}
+    
     <a href="{% url 'home' %}">Home</a>
     
 {% endblock %}

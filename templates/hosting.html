@@ -5,18 +5,37 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h1>Hosting</h1>
-        <p>Here are the events you are hosting:</p>
-        <ul>
-            {% for event in events %}
-                <li>
-                    <p><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a> - {{ event.date }}</p>
-                    <p>See <a href="{% url 'participants' event.pk%}">who</a> will be attending this event</p>
-                    <p><a href="{% url 'event_edit' event.pk %}">Edit Event</a></p>
-                    <p><a href="{% url 'event_delete' event.pk %}">Delete Event</a></p>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if not future_events %}
+            <p>You are not hosting any events.</p>
+        {% else %}
+            <p>Here are the events you are hosting:</p>
+            <ul>
+                {% for f_event in future_events %}
+                    <li>
+                        <p><a href="{% url 'event_detail' f_event.pk %}">{{ f_event.title }}</a> - {{ f_event.date }}</p>
+                        <p>See <a href="{% url 'participants' f_event.pk%}">who</a> attended this event</p>
+                        {% if f_event.date > today %}
+                            <p><a href="{% url 'event_edit' f_event.pk %}">Edit Event</a></p>
+                            <p><a href="{% url 'event_delete' f_event.pk %}">Delete Event</a></p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if past_events %}
+            <p>Past Events:</p>
+            <ul>
+                {% for p_event in past_events %}
+                    <li>
+                        <p><a href="{% url 'event_detail' p_event.pk %}">{{ p_event.title }}</a> - {{ p_event.date }}</p>
+                        <p>See <a href="{% url 'participants' p_event.pk%}">who</a> attended this event</p>
+                        <p><a href="{% url 'event_delete' p_event.pk %}">Delete Event</a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         
+        <p><a href="{% url 'event_new' %}">Create Event</a></p>
         <p><a href="{% url 'profile' user.pk %}">Back to Profile</a></p>
         
     {% else %}

@@ -5,15 +5,30 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h1>Attending</h1>
-        <p>Here are the events you are attending:</p>
-        <ul>
-            {% for event in events %}
-                <li>
-                    <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a> - {{ event.date }} 
-                    by <a href="{% url 'organizer' event.pk %}">{{ event.organizer }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if not future_events %}
+            <p>You are not attending any events.</p>
+        {% else %}
+            <p>Here are the events you are attending:</p>
+            <ul>
+                {% for f_event in future_events %}
+                    <li>
+                        <a href="{% url 'event_detail' f_event.pk %}">{{ f_event.title }}</a> - {{ f_event.date }} 
+                        by <a href="{% url 'organizer' f_event.pk %}">{{ f_event.organizer }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if past_events %}
+            <p>Past Events:</p>
+            <ul>
+                {% for p_event in past_events %}
+                    <li>
+                        <a href="{% url 'event_detail' p_event.pk %}">{{ p_event.title }}</a> - {{ p_event.date }} 
+                        by <a href="{% url 'organizer' p_event.pk %}">{{ p_event.organizer }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         
         <p><a href="{% url 'profile' user.pk %}">Back to Profile</a></p>
         

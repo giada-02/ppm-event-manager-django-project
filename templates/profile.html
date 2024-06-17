@@ -22,6 +22,10 @@
         <p><a href="{% url 'event_new' %}">Create Event</a></p>
         <p><a href="{% url 'profile_edit' user.pk %}">Edit your Profile</a></p>
         <p><a href="{% url 'profile_delete' user.pk %}">Delete your Account</a></p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
         
     {% else %}
         <h2>Not logged in</h2>

@@ -4,27 +4,32 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>{{ event.title }}</h1>
-        <h2>Participants</h2>
-        <p>Number: {{ num_participants }}</p>
-        
-        {% if num_participants == 0 %}
-            <p>There are no participants for this event.</p>
+        {% if user == event.organizer %}
+
+            <h1>{{ event.title }}</h1>
+            <h2>Participants</h2>
+            <p>Number: {{ num_participants }}</p>
+
+            {% if num_participants == 0 %}
+                <p>There are no participants for this event.</p>
+            {% else %}
+                <p>Here are the participants for this event:</p>
+                <ul>
+                    {% for participant in participants %}
+                        <li>
+                            <p>Username: {{ participant.username }}</p>
+                            <p>Email: {{ participant.email }}</p>
+                            <p>First Name: {{ participant.first_name }}</p>
+                            <p>Last Name: {{ participant.last_name }}</p>
+                            <p>Age: {{ participant.age }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <a href="{% url 'hosting' user.pk %}">Back</a>
         {% else %}
-            <p>Here are the participants for this event:</p>
-            <ul>
-                {% for participant in participants %}
-                    <li>
-                        {{ participant.username }}
-                        {{ participant.email }}
-                        {{ participant.first_name }}
-                        {{ participant.last_name }}
-                        {{ participant.age }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <p>You are not the organizer of this event.</p>
         {% endif %}
-        <a href="{% url 'hosting' user.pk %}">Back</a>
     {% else %}
         <p>You must be logged in to view participants.</p>
     {% endif %}
