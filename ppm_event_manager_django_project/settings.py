@@ -32,10 +32,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-if ENVIRONMENT == 'development':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = os.environ.get('DEBUG', default='False') == 'True'
+
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ppm-event-manager-django-project-production.up.railway.app']
 
@@ -96,9 +94,8 @@ DATABASES = {
     }
 }
 
-POSTGRES_LOCALLY = False
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY is True:
-    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
