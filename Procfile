@@ -1,0 +1,1 @@
+web: gunicorn ppm_event_manager_django_project.wsgi --log-file -
