@@ -10,4 +10,4 @@ Once the user has be authenticated, they can either `Logout` or go to their Prof
 In regards to the user's account and profile, they can Logout, Delete their account or Edit the profile details through a form. As for handling the events, a user can create a new event through the event creation form providing a title, description, date and location. A user can also view the events they are attending and the ones they are hosting.\
 To attend an event hosted by another user, a user can `Join` it, to remove the event from attending list, a user can `Leave` it.\
 Tracking event attendance is achieved by the hosting page of the organizer of the event, this user can view how many users joined the event and the attendees details.
-The organizer is also allowed to edit the events they are hosting.
+The organizer is also allowed to edit and delete the events they are hosting.
